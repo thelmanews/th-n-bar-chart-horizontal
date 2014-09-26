@@ -80,9 +80,7 @@
 		      self.values.text(function(d) {return d.display_value ? d.display_value : d.value ;});
 
 		      // creating scales
-		      //var scales = self.simpleScaleBuilder(self.dims.bars.area, height, self.chartData, 'horizontal');
-		      var scales = self.simpleScaleBuilder(self.dims.width, self.dims.height, self.chartData, 'horizontal');
-
+		      var scales = self.simpleScaleBuilder(self.dims.bars.area, self.dims.height, self.chartData, 'horizontal');
 
 		      var x = scales.x;
 		      var y = scales.y;
@@ -187,6 +185,8 @@
 		      self.dims.values.fontSize = Math.max (Math.min(self.dims.values.height,42) , 15);
 		      self.dims.values.containerWidth = maxValueLength * self.dims.values.fontSize * 0.75;  // characters x font size x 0.75 (average width/height)
 		      self.dims.bars.area = width - self.dims.values.containerWidth; // increase width by the extra space taken by values
+		      
+		      
 
 		  },
 		  /**
@@ -313,7 +313,8 @@
 		  	  
 		  	  self._setupHorizontalDims();
 
-	    	  var scales = self.simpleScaleBuilder(self.dims.width, self.dims.height, self.chartData, 'horizontal');
+	    	 	var scales = self.simpleScaleBuilder(self.dims.bars.area, self.dims.height, self.chartData, 'horizontal');
+
 
 		      var x = scales.x;
 		      var y = scales.y;
@@ -336,7 +337,7 @@
 		  	  var self = this;
 
 		      
-		      var scales = self.simpleScaleBuilder(self.dims.width, self.dims.height, self.chartData);
+		      var scales = self.simpleScaleBuilder(self.dims.bars.area, self.dims.height, self.chartData, 'horizontal');
 
 
 		      var x = scales.x;
