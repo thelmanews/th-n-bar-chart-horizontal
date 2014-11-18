@@ -154,16 +154,17 @@
 		  _setupHorizontalDims: function() {
 
 		  	  var self = this;
-		  	  
+
 		  	  self.dims = self.setupDimensions(self);
 
-		  	  self.dims.height = self.dims.height - self.dims.margin.top - self.dims.margin.bottom; // override default margin, not necessary
 		  	  self.dims.margin.top = 5; // override default margin, not necessary
 		  	  self.dims.margin.bottom = 0; // override default margin, not necessary
-
+					self.dims.height = self.computedHeight - self.dims.margin.top - self.dims.margin.bottom; // override default margin, not necessary
+		  	  
 		  	  self.setupBarDims(self, 1, 1.6, 'horizontal'); // self, overlap, gap
 
 		      self.colors = self.getColors();
+		      
 	    	  var margin = self.dims.margin,
 	    	  	  width = self.dims.width,
 	    	      height = self.dims.height;
