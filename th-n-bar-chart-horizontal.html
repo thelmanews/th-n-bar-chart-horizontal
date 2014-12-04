@@ -106,7 +106,7 @@
 
 		      self.values
 		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })
-		        .attr('x', self.dims.values.containerWidth - 8)
+		        .attr('x', self.dims.values.containerWidth -8)
 		        .style('font-size', function(d) { return self.dims.values.fontSize+'px';});
 
 
@@ -184,7 +184,7 @@
 		      self.dims.labels.height = 25;
 		      self.dims.values.height = self.dims.bars.width;
 		      self.dims.values.fontSize = Math.max (Math.min(self.dims.values.height,42) , 15);
-		      self.dims.values.containerWidth = maxValueLength * self.dims.values.fontSize * 0.75;  // characters x font size x 0.75 (average width/height)
+		      self.dims.values.containerWidth = maxValueLength * self.dims.values.fontSize * 0.675;  // characters x font size x 0.675 (average width/height)
 		      self.dims.bars.area = width - self.dims.values.containerWidth; // increase width by the extra space taken by values
 		      
 		      
@@ -207,7 +207,6 @@
 			  self.svg
 		      	.attr('width', width + margin.left + margin.right)
 		        .attr('height', height + margin.top + margin.bottom);
-
 		      // setting up the size. needed for resizing
 		      self.container.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
