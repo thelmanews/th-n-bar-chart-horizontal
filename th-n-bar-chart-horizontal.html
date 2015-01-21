@@ -435,6 +435,10 @@
                   "version": "0.0.1",
                   "thumbnail":"nbar.jpg", 
                   "tags":["chart", "bar"],
+                  "fields":[{ "name":"label", "type":"string", "required":true},
+                            { "name":"value", "type":"num", "required":true},
+                            { "name":"display_value", "type":"string"}
+                  ],
                   "inputAttr": {
                     "chartData":{"friendly":"Data", "type":"table-repeating","rows":2, 
                       "fields":{
