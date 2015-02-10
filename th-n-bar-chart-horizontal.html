@@ -69,7 +69,7 @@
 
 		      //creating all the svg items
 		      self.svg = d3.select(chart_svg);
-
+		      
 		      self._setupElements();
 
 		      // this is independent of size but dependent on data
@@ -81,6 +81,7 @@
 
 		      var x = scales.x;
 		      var y = scales.y;
+		      
 
 		      // is there a better way than exposing these?!
 		      self.y = y;
@@ -151,7 +152,7 @@
 		  _setupHorizontalDims: function() {
 
 		  	  var self = this;
-
+		  	  self.chartData = self.cleanChartData(self.chartData);
 		  	  self.dims = self.setupDimensions(self);
 		  	  self.dims.margin.left = 2; 
 		  	  self.dims.margin.top = 5; // override default margin, not necessary
