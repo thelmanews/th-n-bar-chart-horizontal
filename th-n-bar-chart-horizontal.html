@@ -53,6 +53,7 @@
 		    {label: 'Cheerleader', value: 40, display_value: '$40', color:""},
 		    {label: 'Designer', value: 70, display_value: '$70', color:""}
 		  ],
+  
 		  /**
 		   * Initializes the component. Called by th-animated component (th-animated/th-animated.html)
 		   * 
@@ -103,7 +104,6 @@
 
 		      self.values
 		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })
-		        .attr('x', self.dims.values.containerWidth -8)
 		        .style('font-size', function(d) { return self.dims.values.fontSize+'px';});
 
 
@@ -181,7 +181,31 @@
 		      self.dims.labels.height = 25;
 		      self.dims.values.height = self.dims.bars.width;
 		      self.dims.values.fontSize = Math.max (Math.min(self.dims.values.height,42) , 15);
-		      self.dims.values.containerWidth = maxValueLength * self.dims.values.fontSize * 0.675;  // characters x font size x 0.675 (average width/height)
+
+		      // calculate the width of values by createing mock text elements and then removing them.
+		      // not the best way of doing that but the most plausable without requiring major changes
+
+		      var mockValues = d3.select(this.$.chart).selectAll('.mock').data(self.chartData);
+		      mockValues.enter().append('text');
+
+		      var computedLengths = [];
+
+		      mockValues
+		        .style('text-anchor','end')
+		        .style('font-size', function(d) { return self.dims.values.fontSize+'px';})
+			    .text(function(d) {return d.display_value ? d.display_value : d.value ;})
+      			.attr('class', function(d) {
+      				computedLengths.push(this.getComputedTextLength());
+      				return 'mock';
+      			});
+
+			  d3.select(this.$.chart).selectAll('.mock').remove();
+
+			  var computedValueWidth = d3.max(computedLengths);
+				
+
+		      self.dims.values.containerWidth = computedValueWidth - self.dims.margin.left*2;		      
+		      //self.dims.values.containerWidth = maxValueLength * self.dims.values.fontSize * 0.675;  // characters x font size x 0.675 (average width/height)
 		      self.dims.bars.area = width - self.dims.values.containerWidth; // increase width by the extra space taken by values
 		      
 		      
@@ -205,11 +229,15 @@
 		      	.attr('width', width + margin.left + margin.right)
 		        .attr('height', height + margin.top + margin.bottom);
 		      // setting up the size. needed for resizing
+
+		      self.valueContainer.attr('transform','translate ('+(self.dims.values.containerWidth + self.dims.margin.left)+',0)');
+		       
+		       
 		      self.container.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-		      self.barContainer.attr('transform','translate ('+self.dims.values.containerWidth+',0)');
+		      self.barContainer.attr('transform','translate ('+(self.dims.values.containerWidth+self.dims.margin.left*2)+',0)');
 
-		      self.labelContainer.attr('transform','translate ('+self.dims.values.containerWidth+',0)');
+		      self.labelContainer.attr('transform','translate ('+(self.dims.values.containerWidth+self.dims.margin.left*2)+',0)');
 
 
 
@@ -292,9 +320,9 @@
 		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width + self.dims.labels.height* 0.6; });
 
 		      this.values
-		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })
-		        .attr('x', self.dims.values.containerWidth - 8)
-		        .style('font-size', function(d) { return self.dims.values.fontSize+'px';})
+		        //.attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })  //x and y are not animate values!!!
+		        //.attr('x', self.dims.values.containerWidth - 8)
+		        //.style('font-size', function(d) { return self.dims.values.fontSize+'px';})
 		        .style('opacity', 1);
 		        
 		        
