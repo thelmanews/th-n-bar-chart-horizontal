@@ -258,15 +258,15 @@
 		      var self = this,
 		      	  height= self.dims.height;
 		      // without transition
-		      if(hard) {
+		      // if(hard) {
 			      self.bars.attr('width', 0);
 			      self.values.style('opacity', 0 );
-			  }
-			  else {
-			      self.bars.transition().duration(1000).attr('width', 0).style('opacity', 0);
-			      self.values.transition().duration(1000).style('opacity', 0);
+			  // }
+			  // else {
+			  //     self.bars.transition().duration(1000).attr('width', 0).style('opacity', 0);
+			  //     self.values.transition().duration(1000).style('opacity', 0);
 
-			  }
+			  // }
 		      
 		  },
 		  /**
