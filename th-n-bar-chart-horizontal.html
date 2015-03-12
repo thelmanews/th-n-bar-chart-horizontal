@@ -50,8 +50,9 @@
 		  chartData: [
 		    {label: 'Player of the day', value: 15, display_value: '$15', color:""},
 		    {label: 'Vendor', value: 20, display_value: '$20', color:"", color:""},
-		    {label: 'Cheerleader', value: 40, display_value: '$40', color:""},
-		    {label: 'Designer', value: 70, display_value: '$70', color:""}
+		    {label: 'Cheerleader', value: 50, display_value: '$50', color:""},
+		    {label: 'Designer', value: 100, display_value: '$100', color:""}
+
 		  ],
   
 		  /**
@@ -205,9 +206,9 @@
 			  var computedValueWidth = d3.max(computedLengths);
 				
 
-		      self.dims.values.containerWidth = computedValueWidth - self.dims.margin.left*2;		      
-		      //self.dims.values.containerWidth = maxValueLength * self.dims.values.fontSize * 0.675;  // characters x font size x 0.675 (average width/height)
-		      self.dims.bars.area = width - self.dims.values.containerWidth; // increase width by the extra space taken by values
+		      self.dims.values.containerWidth = computedValueWidth; // - self.dims.margin.left*2; //(moved it down to take it out calculating the area.)		      
+
+		      self.dims.bars.area = width - self.dims.values.containerWidth - self.dims.margin.left*2 - 2; // increase width by the extra space taken by values
 		      
 		      
 
