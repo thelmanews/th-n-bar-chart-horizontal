@@ -50,9 +50,7 @@
 		  chartData: [
 		    {label: 'Player of the day', value: 15, display_value: '$15', color:""},
 		    {label: 'Vendor', value: 20, display_value: '$20', color:"", color:""},
-		    {label: 'Cheerleader', value: 400, display_value: '$50', color:""},
-		    {label: 'Designer', value: 800, display_value: '$100', color:""}
-
+		    {label: 'Cheerleader', value: 50, display_value: '$50', color:""}
 		  ],
   
 		  /**
@@ -262,15 +260,15 @@
 		        //.style('opacity', 0)
 		        .style('text-anchor','left')
 		        .attr('fill', function(d,i){ return self.colors.accents[i]; })
-		        .attr('stroke', function(d,i){ return self.colors.accents[i]; })
+		        //.attr('stroke', function(d,i){ return self.colors.accents[i]; }) //does this do anything?
 		        .style('fill', function(d,i){ return d.color})
-		        .style('stroke', function(d,i){ return d.color});
+		        .style('stroke', function(d,i){ return 'none'}); //label stroke makes the font boldish
 
 		      this.values
 		        .attr("class", function(d,i){return "value data"+i;})
 		        .style('text-anchor','end')
 		        .attr('fill', function(d,i){ return self.colors.accents[i]; })
-		        .attr('stroke', function(d,i){ return self.colors.accents[i]; })
+		        //.attr('stroke', function(d,i){ return self.colors.accents[i]; }) //does this do anything?
 		        .style('fill', function(d,i){ return d.color})
 		        .style('stroke', function(d,i){ return d.color});
 
