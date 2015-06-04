@@ -100,7 +100,10 @@
 
 		      self.labels
 		        .attr('x', 0)
-		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width + self.dims.labels.height* 0.6; });
+		        .attr('y', function(d,i) {		 
+		        	var yy = y(i) + self.dims.bars.width + self.dims.labels.height * 0.75;
+ 					return yy; 
+				});
 
 		      self.values
 		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })
@@ -176,11 +179,13 @@
 
 		      // self.dims.bars.gap = 0.7; // Make this wider than default to make room for text
 		     	// self.dims.barWidth = Math.min(70,((self.dims.width / self.dims.numBars)/(1+self.dims.barGap)));
+
 		      self.dims.labels =  {};
 		      self.dims.values = {};
-		      self.dims.labels.height = 25;
+
 		      self.dims.values.height = self.dims.bars.width;
 		      self.dims.values.fontSize = Math.max (Math.min(self.dims.values.height,42) , 15);
+
 
 		      // calculate the width of values by createing mock text elements and then removing them.
 		      // not the best way of doing that but the most plausable without requiring major changes
@@ -207,8 +212,35 @@
 		      self.dims.values.containerWidth = computedValueWidth; // - self.dims.margin.left*2; //(moved it down to take it out calculating the area.)		      
 
 		      self.dims.bars.area = width - self.dims.values.containerWidth - self.dims.margin.left*2 - 4; // increase width by the extra space taken by values
+
+	          var mockLabels = d3.select(self.$.chart).selectAll('.mock').data(self.chartData);
+	          mockLabels.enter().append('text');
+
+	          var computedLengths = [],
+	             computedHeight,
+	             computedMaxLabelWidth,
+	             computedLastLabelWidth;
+
+
+	          mockLabels
+	            .style('text-anchor','end')
+	            //.style('font-size', function(d) { return self.dims.values.fontSize+'px';}) //get the font from css
+	          .text(function(d) {return d.label ;})
+	            .attr('class', function(d) {
+	              return 'label mock';
+	            })
+	            .attr('mock', function(d) {
+	              computedLengths.push(this.getComputedTextLength());
+	              computedHeight = this.getBBox().height;
+	              return 'mock';
+	            });
+
+	          d3.select(self.$.chart).selectAll('.mock').remove();		      
 		      
-		      
+	          self.dims.labels.width = computedMaxLabelWidth;
+	          self.dims.labels.height = computedHeight;
+
+
 
 		  },
 		  /**
@@ -314,10 +346,12 @@
 		        .attr('width', function(d) {return x(d.value)})
 		        .style('opacity', 1);
 
-
+		        //does this do anything? the x and y are always set to the same value
+		        /*
 		        this.labels.transition().duration(this.animationDelay)
 		        .attr('x', 0)
-		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width + self.dims.labels.height* 0.6; });
+		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width + self.dims.labels.height * 0.4; });
+		        */
 
 		      this.values
 		        //.attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })  //x and y are not animate values!!!
