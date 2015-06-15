@@ -107,9 +107,12 @@
 				});
 
 		      self.values
-		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height; })
+		        .attr('y', function(d,i) { 
+		        	return y(i) +  self.dims.labels.height + self.dims.bars.width/2 /*+ self.dims.values.height * 0.1*/;
+		        })
 		        .attr('x', 0)
 		        .style('opacity', 0)
+		        .style('alignment-baseline', 'middle')
 		        .style('font-size', function(d) { return self.dims.values.fontSize+'px';});
 
 
@@ -265,7 +268,7 @@
 		        .attr('height', height + margin.top + margin.bottom);
 		      // setting up the size. needed for resizing
 
-		      self.valueContainer.attr('transform','translate ('+(self.dims.values.containerWidth + self.dims.margin.left)+',0)');
+		      //self.valueContainer.attr('transform','translate ('+(self.dims.values.containerWidth + self.dims.margin.left)+',0)');
 		       
 		       
 		      self.container.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -301,7 +304,7 @@
 
 		      this.values
 		        .attr("class", function(d,i){return "value data"+i;})
-		        .style('text-anchor','end')
+		        //.style('text-anchor','end')
 		        .attr('fill', function(d,i){ return self.colors.accents[i]; })
 		        //.attr('stroke', function(d,i){ return self.colors.accents[i]; }) //does this do anything?
 		        .style('fill', function(d,i){ return d.color})
@@ -356,7 +359,7 @@
 		        */
 
 		      this.values.transition().duration(this.animationDelay)
-		        .attr('x', function(d) {return x(d.value)})
+		        .attr('x', function(d) {return x(d.value) + 2})
 		        .style('opacity', 1);
 		        
 		        
