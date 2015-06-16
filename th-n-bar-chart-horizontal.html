@@ -95,18 +95,24 @@
 		      self.bars		        
 		      	.attr('x', x(0)) //function(d) { return x(d.label); })  rev
 		       // .attr('y', function(d,i) { return y(i); }) //function(d) { return height; })  rev
+		        .attr('y', function(d,i) { return y(i) + self.dims.labels.height ; }) //function(d) { return height; })  rev
 		        .attr('height', self.dims.bars.width)
 		        .attr('width', 0);
 
 		      self.labels
 		        .attr('x', 0)
 		        .attr('y', function(d,i) {		 
-		        	var yy = y(i) + self.dims.bars.width + self.dims.labels.height * 0.75;
+		        	var yy = y(i) /*+ self.dims.bars.width*/ + self.dims.labels.height * 0.75;
  					return yy; 
 				});
 
 		      self.values
-		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })
+		        .attr('y', function(d,i) { 
+		        	return y(i) +  self.dims.labels.height + self.dims.bars.width/2 /*+ self.dims.values.height * 0.1*/;
+		        })
+		        .attr('x', 0)
+		        .style('opacity', 0)
+		        .style('alignment-baseline', 'middle')
 		        .style('font-size', function(d) { return self.dims.values.fontSize+'px';});
 
 
@@ -262,14 +268,14 @@
 		        .attr('height', height + margin.top + margin.bottom);
 		      // setting up the size. needed for resizing
 
-		      self.valueContainer.attr('transform','translate ('+(self.dims.values.containerWidth + self.dims.margin.left)+',0)');
+		      //self.valueContainer.attr('transform','translate ('+(self.dims.values.containerWidth + self.dims.margin.left)+',0)');
 		       
 		       
 		      self.container.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-		      self.barContainer.attr('transform','translate ('+(self.dims.values.containerWidth+self.dims.margin.left*2)+',0)');
+		      //self.barContainer.attr('transform','translate ('+(self.dims.values.containerWidth+self.dims.margin.left*2)+',0)');
 
-		      self.labelContainer.attr('transform','translate ('+(self.dims.values.containerWidth+self.dims.margin.left*2)+',0)');
+		      //self.labelContainer.attr('transform','translate ('+(self.dims.values.containerWidth+self.dims.margin.left*2)+',0)');
 
 
 
@@ -298,7 +304,7 @@
 
 		      this.values
 		        .attr("class", function(d,i){return "value data"+i;})
-		        .style('text-anchor','end')
+		        //.style('text-anchor','end')
 		        .attr('fill', function(d,i){ return self.colors.accents[i]; })
 		        //.attr('stroke', function(d,i){ return self.colors.accents[i]; }) //does this do anything?
 		        .style('fill', function(d,i){ return d.color})
@@ -341,7 +347,6 @@
 		        var width= self.dims.width;
 		        this.bars.transition().duration(this.animationDelay)
 		        .attr('x', x(0)) //function(d) { return x(d.label); })  rev
-		        .attr('y', function(d,i) { return y(i); }) //function(d) { return height; })  rev
 		        .attr('height', self.dims.bars.width)
 		        .attr('width', function(d) {return x(d.value)})
 		        .style('opacity', 1);
@@ -353,10 +358,8 @@
 		        .attr('y', function(d,i) { return y(i) + self.dims.bars.width + self.dims.labels.height * 0.4; });
 		        */
 
-		      this.values
-		        //.attr('y', function(d,i) { return y(i) + self.dims.bars.width/2 + self.dims.values.height* 0.4; })  //x and y are not animate values!!!
-		        //.attr('x', self.dims.values.containerWidth - 8)
-		        //.style('font-size', function(d) { return self.dims.values.fontSize+'px';})
+		      this.values.transition().duration(this.animationDelay)
+		        .attr('x', function(d) {return x(d.value) + 2})
 		        .style('opacity', 1);
 		        
 		        
